@@ -1,0 +1,8 @@
+{
+  "ImageClassification-Starly": {
+    "MERGE": {
+      "InferenceInterval": "60",
+      "UseCamera": "true"
+    }
+  }
+}
