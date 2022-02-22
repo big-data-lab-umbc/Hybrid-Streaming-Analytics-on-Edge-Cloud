@@ -1,4 +1,5 @@
 ###
+# tensorflow == 2.2.0
 # Use historical data to train a lstm model, then save the model to local. Used on big data cluster.
 ###
 from __future__ import print_function

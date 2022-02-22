@@ -56,7 +56,7 @@
           },
           "run": {
             "RequiresPrivilege": "true",
-            "script": "\n                                    . {variant.TensorFlowLite:configuration:/MLRootPath}/greengrass_ml_tflite_venv/bin/activate\n                                    python3 -u {artifacts:path}/hybird_learning/batch_layer.py"
+            "script": "\n                                    . {variant.TensorFlowLite:configuration:/MLRootPath}/greengrass_ml_tflite_venv/bin/activate\n                                    python3 -u {artifacts:path}/hybird_learning/hybrid_layer.py"
           }
         }
       }

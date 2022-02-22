@@ -11,6 +11,8 @@ import json
 
 import config_utils
 import IPCUtils as ipc_utils
+
+from subprocess import check_output, Popen, call, PIPE, STDOUT
 #from keras import backend as K
 #os.environ['PYSPARK_SUBMIT_ARGS'] = "--packages org.apache.spark:spark-sql-kafka-0-10_2.11:2.4.3 pyspark-shell"
 #os.environ['PYSPARK_PYTHON'] = "./environment/bin/python3"
@@ -49,16 +51,17 @@ def recordstream(df, model_path):
         df_final = df_final.withColumn('Latency_Start', lit(start_time))
         df_final = df_final.withColumn('Latency_End', lit(end_time))
         df_final = df_final.withColumn('Latency', lit(end_time-start_time))
-        df_final = df_final.withColumn('value',(F.concat(col("TS"),lit(","),
-                                            col("Temp"),lit(","),
-                                            col("Temp_Predict"),lit(","),
-                                            col("RMSE_Score"),lit(","),
-                                            col("Latency_Start"),lit(","),
-                                            col("Latency_End"),lit(","),
-                                            col("Latency")
-                                            )).cast(tp.StringType()))
+        # df_final = df_final.withColumn('value',(F.concat(col("TS"),lit(","),
+        #                                     col("Temp"),lit(","),
+        #                                     col("Temp_Predict"),lit(","),
+        #                                     col("RMSE_Score"),lit(","),
+        #                                     col("Latency_Start"),lit(","),
+        #                                     col("Latency_End"),lit(","),
+        #                                     col("Latency")
+        #                                     )).cast(tp.StringType()))
         df_final.show(5)
 
+        '''
         #prepare PAYLOAD
         PAYLOAD = df_final.select('value').toPandas().to_dict('dict')
 
@@ -78,6 +81,8 @@ def recordstream(df, model_path):
                 config_utils.logger.info("No topic set to publish the inference results to the cloud.")
         except Exception as e:
             config_utils.logger.error("Exception occured during prediction: {}".format(e))
+        '''
+        return df_final.select('TS','Temp','Temp_Predict','RMSE_Score','MAE_Score','MSE_Score','Latency')
 
 
 # if len(sys.argv) != 3:
@@ -88,27 +93,30 @@ def recordstream(df, model_path):
 # #batch_size = str(sys.argv[2]) + ' seconds'
 # g_model = str(sys.argv[2])  #'./sample_model/Ot_avg.tflite'
 
-source_data = '/home/pi/Downloads/greengrass_packages_batchlayer/artifacts/HybirdLearning-Starly/1.0.0/hybird_learning/sample_data/temperature_stream.csv'
-g_model = '/home/pi/Downloads/greengrass_packages_batchlayer/artifacts/HybirdLearning-Starly/1.0.0/hybird_learning/sample_model/Ot_avg.tflite'
 
-# spark = SparkSession.builder.config("spark.archives","pyspark_venv.tar.gz#environment").appName("Lstm_BatchLayer").enableHiveSupport().getOrCreate()
+def run_batch():
+    source_data = '/home/pi/Downloads/greengrass_packages_hybridlearning/artifacts/HybirdLearning-Starly/1.0.0/hybird_learning/sample_data/temperature_stream.csv'
+    g_model = '/home/pi/Downloads/greengrass_packages_hybridlearning/artifacts/HybirdLearning-Starly/1.0.0/hybird_learning/sample_model/Ot_avg.tflite'
 
-# lines = spark \
-#     .readStream \
-#     .format("kafka") \
-#     .option("kafka.bootstrap.servers", broker) \
-#     .option("startingOffsets", "earliest") \
-#     .option("subscribe", source_topic) \
-#     .load()
-# spark.sparkContext.setLogLevel("FATAL")
-# query = lines.writeStream.trigger(processingTime=batch_size).foreachBatch(recordstream).start()
-# query.awaitTermination()
+    # spark = SparkSession.builder.config("spark.archives","pyspark_venv.tar.gz#environment").appName("Lstm_BatchLayer").enableHiveSupport().getOrCreate()
 
-spark = SparkSession \
-    .builder \
-    .appName("BatchLayer") \
-    .getOrCreate()
-spark.sparkContext.setLogLevel("FATAL")
+    # lines = spark \
+    #     .readStream \
+    #     .format("kafka") \
+    #     .option("kafka.bootstrap.servers", broker) \
+    #     .option("startingOffsets", "earliest") \
+    #     .option("subscribe", source_topic) \
+    #     .load()
+    # spark.sparkContext.setLogLevel("FATAL")
+    # query = lines.writeStream.trigger(processingTime=batch_size).foreachBatch(recordstream).start()
+    # query.awaitTermination()
 
-dataFrame = spark.read.csv(source_data, header=True, inferSchema=True)
-recordstream(dataFrame,g_model)
+    spark = SparkSession \
+        .builder \
+        .appName("BatchLayer") \
+        .getOrCreate()
+    spark.sparkContext.setLogLevel("FATAL")
+
+    dataFrame = spark.read.csv(source_data, header=True, inferSchema=True)
+    
+    return recordstream(dataFrame,g_model)
