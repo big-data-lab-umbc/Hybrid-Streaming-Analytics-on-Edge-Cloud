@@ -6,7 +6,6 @@
 
 We use Debian11 (Bullseye) in RPi4 with Python3.8.
 
-For image classification:
 ```bash
 sudo apt-get install libopenjp2-7 libilmbase23 libopenexr-dev libavcodec-dev libavformat-dev libswscale-dev libv4l-dev libgtk-3-0 libwebp-dev
 sudo pip3 install opencv-python
@@ -47,3 +46,33 @@ sudo /greengrass/v2/bin/greengrass-cli component restart  --names "HybirdLearnin
 ```bash
 sudo tail -f /greengrass/v2/logs/HybirdLearning-Starly.log
 ```
+
+
+## Send customized messages or files from Egde to Cloud
+
+### Prerequirement
+We use Debian11 (Bullseye) in RPi4 with Python3.8.
+
+```bash
+sudo python3 -m pip install awsiotsdk
+sudo python3 -m pip install awscrt
+```
+
+### Steps
+Assume the [greengrass_packages_publishdata](./greengrass_packages_publishdata) folder is in path ``~/Downloads``. On [MQTT test client](https://us-west-2.console.aws.amazon.com/iot/home?region=us-west-2#/test) page, subscribe topic "edge-to-cloud/metadata". 
+
+```bash
+cd ~/Downloads
+unzip greengrass_packages_publishdata.zip 
+sudo /greengrass/v2/bin/greengrass-cli deployment create --recipeDir ~/Downloads/greengrass_packages_publishdata/recipes --artifactDir ~/Downloads/greengrass_packages_publishdata/artifacts --merge "MetadataPublishing-Starly=1.0.0" 
+sudo /greengrass/v2/bin/greengrass-cli component restart  --names "MetadataPublishing-Starly"
+```
+
+Check the logs
+```bash
+sudo tail -f /greengrass/v2/logs/MetadataPublishing-Starly.log
+```
+
+Then see the output on "MQTT test client" page.
+
+> Note: If you are using different edge like Jetson Nano, you need to change the [recipe.json](./greengrass_packages_publishdata/recipes/recipe.json#L38) file. For  example, change platform[architecture]:"arm" to "aarch64".
