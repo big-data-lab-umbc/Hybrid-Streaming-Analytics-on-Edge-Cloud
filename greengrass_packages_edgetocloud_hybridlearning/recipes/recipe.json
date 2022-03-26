@@ -1,0 +1,63 @@
+{
+    "RecipeFormatVersion": "2020-01-25",
+    "ComponentName": "EdgeToCloud-HybirdLearning-Starly",
+    "ComponentVersion": "1.0.0",
+    "ComponentType": "aws.greengrass.generic",
+    "ComponentDescription": "EdgeToCloud-HybirdLearning recipe - EdgeToCloud-HybirdLearning with Batchlayer and pre-trained tflite model from S3.",
+    "ComponentPublisher": "Amazon",
+    "ComponentConfiguration": {
+      "DefaultConfiguration": {
+        "accessControl": {
+          "aws.greengrass.ipc.mqttproxy": {
+            "EdgeToCloud-HybirdLearning-Starly:mqttproxy:1": {
+              "policyDescription": "Allows access to publish/subscribe to all topics.",
+              "operations": [
+                "aws.greengrass#PublishToIoTCore",
+                "aws.greengrass#SubscribeToIoTCore"
+              ],
+              "resources": [
+                "*"
+              ]
+            }
+          }
+        },
+        "InferenceInterval": "3600",
+        "PublishResultsOnTopic": "ml/tflite/#",
+        "ModelResourceKey": {
+          "model": "TensorFlowLite-Mobilenet"
+        }
+      }
+    },
+    "ComponentDependencies": {
+      "variant.TensorFlowLite": {
+        "VersionRequirement": ">=2.5.4 <2.6.0",
+        "DependencyType": "HARD"
+      },
+      "variant.TensorFlowLite.ImageClassification.ModelStore": {
+        "VersionRequirement": ">=2.1.3 <2.2.0",
+        "DependencyType": "HARD"
+      },
+      "aws.greengrass.Nucleus": {
+        "VersionRequirement": ">=2.0.0 <2.6.0",
+        "DependencyType": "SOFT"
+      }
+    },
+    "Manifests": [
+      {
+        "Platform": {
+          "os": "linux",
+          "architecture": "arm"
+        },
+        "Lifecycle": {
+          "setEnv": {
+            "TFLITE_IC_MODEL_DIR": "{artifacts:path}/edgetocloud_hybird_learning/sample_model/"
+          },
+          "run": {
+            "RequiresPrivilege": "true",
+            "script": "\n                                    . {variant.TensorFlowLite:configuration:/MLRootPath}/greengrass_ml_tflite_venv/bin/activate\n                                    /home/pi/Downloads/spark-3.0.3-bin-hadoop2.7/bin/spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.0.3 {artifacts:path}/edgetocloud_hybird_learning/hybrid_layer.py localhost:9092 'speed_topic' 'batch_topic' 20"
+          }
+        }
+      }
+    ],
+    "Lifecycle": {}
+  }

@@ -42,7 +42,7 @@
         "Lifecycle": {
           "run": {
             "RequiresPrivilege": "true",
-            "script": "\n                                    . {variant.TensorFlowLite:configuration:/MLRootPath}/greengrass_ml_tflite_venv/bin/activate\n                                    python3 -u {artifacts:path}/metadata_publishing/main.py"
+            "script": "\n                                    . {variant.TensorFlowLite:configuration:/MLRootPath}/greengrass_ml_tflite_venv/bin/activate\n                                    /home/pi/Downloads/spark-3.0.3-bin-hadoop2.7/bin/spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.0.3 {artifacts:path}/metadata_publishing/main.py"
           }
         }
       }

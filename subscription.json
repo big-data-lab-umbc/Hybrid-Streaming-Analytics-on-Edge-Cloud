@@ -1,0 +1,158 @@
+{
+  "topicFilter": "edge-to-cloud/lstm_hybrid_learning",
+  "qos": 1,
+  "messages": [
+    {
+      "format": "json",
+      "topic": "edge-to-cloud/lstm_hybrid_learning",
+      "timestamp": 1647891195943,
+      "payload": {
+        "Epoch_Id": "8",
+        "Record_Num": "292",
+        "Speed_Latency": "12.166847467422485",
+        "Batch_Latency": "12.53242301940918",
+        "Wt_Latency": "8.81658673286438",
+        "Speed_RMSE": "6.015",
+        "Batch_RMSE": "1.473",
+        "Wt_RMSE": "2.7356175594382433",
+        "Speed_MAE": "5.694",
+        "Batch_MAE": "1.341",
+        "Wt_MAE": "2.691705479452055",
+        "MQTT_Publish_Time": "1647891195.7839549"
+      }
+    },
+    {
+      "format": "json",
+      "topic": "edge-to-cloud/lstm_hybrid_learning",
+      "timestamp": 1647891149249,
+      "payload": {
+        "Epoch_Id": "7",
+        "Record_Num": "1146",
+        "Speed_Latency": "16.600037574768066",
+        "Batch_Latency": "15.642372369766235",
+        "Wt_Latency": "14.795453786849976",
+        "Speed_RMSE": "4.242",
+        "Batch_RMSE": "4.471",
+        "Wt_RMSE": "3.0359036337593044",
+        "Speed_MAE": "3.517",
+        "Batch_MAE": "3.049",
+        "Wt_MAE": "2.4427006980802792",
+        "MQTT_Publish_Time": "1647891149.0714133"
+      }
+    },
+    {
+      "format": "json",
+      "topic": "edge-to-cloud/lstm_hybrid_learning",
+      "timestamp": 1647891097621,
+      "payload": {
+        "Epoch_Id": "6",
+        "Record_Num": "892",
+        "Speed_Latency": "15.88146185874939",
+        "Batch_Latency": "16.78048825263977",
+        "Wt_Latency": "21.723029851913452",
+        "Speed_RMSE": "2.484",
+        "Batch_RMSE": "1.926",
+        "Wt_RMSE": "1.7688808219062198",
+        "Speed_MAE": "1.786",
+        "Batch_MAE": "1.792",
+        "Wt_MAE": "1.6287769058295962",
+        "MQTT_Publish_Time": "1647891097.460039"
+      }
+    },
+    {
+      "format": "json",
+      "topic": "edge-to-cloud/lstm_hybrid_learning",
+      "timestamp": 1647891056913,
+      "payload": {
+        "Epoch_Id": "5",
+        "Record_Num": "1807",
+        "Speed_Latency": "20.58768939971924",
+        "Batch_Latency": "26.669527292251587",
+        "Wt_Latency": "34.87095022201538",
+        "Speed_RMSE": "5.182",
+        "Batch_RMSE": "1.624",
+        "Wt_RMSE": "1.8254032505495241",
+        "Speed_MAE": "3.806",
+        "Batch_MAE": "1.444",
+        "Wt_MAE": "1.5588378527946873",
+        "MQTT_Publish_Time": "1647891056.7447865"
+      }
+    },
+    {
+      "format": "json",
+      "topic": "edge-to-cloud/lstm_hybrid_learning",
+      "timestamp": 1647891005962,
+      "payload": {
+        "Epoch_Id": "4",
+        "Record_Num": "1503",
+        "Speed_Latency": "30.247302055358887",
+        "Batch_Latency": "35.15182089805603",
+        "Wt_Latency": "39.634387731552124",
+        "Speed_RMSE": "6.446",
+        "Batch_RMSE": "2.282",
+        "Wt_RMSE": "1.932170840019921",
+        "Speed_MAE": "5.463",
+        "Batch_MAE": "1.472",
+        "Wt_MAE": "1.7156719893546242",
+        "MQTT_Publish_Time": "1647891005.6991148"
+      }
+    },
+    {
+      "format": "json",
+      "topic": "edge-to-cloud/lstm_hybrid_learning",
+      "timestamp": 1647890934776,
+      "payload": {
+        "Epoch_Id": "3",
+        "Record_Num": "2163",
+        "Speed_Latency": "59.33484745025635",
+        "Batch_Latency": "34.972665309906006",
+        "Wt_Latency": "45.03428554534912",
+        "Speed_RMSE": "12.876",
+        "Batch_RMSE": "1.76",
+        "Wt_RMSE": "3.5140552739436273",
+        "Speed_MAE": "12.395",
+        "Batch_MAE": "1.072",
+        "Wt_MAE": "3.2404276467868702",
+        "MQTT_Publish_Time": "1647890934.6148002"
+      }
+    },
+    {
+      "format": "json",
+      "topic": "edge-to-cloud/lstm_hybrid_learning",
+      "timestamp": 1647890846828,
+      "payload": {
+        "Epoch_Id": "2",
+        "Record_Num": "2398",
+        "Speed_Latency": "59.33484745025635",
+        "Batch_Latency": "55.5176568031311",
+        "Wt_Latency": "54.398523807525635",
+        "Speed_RMSE": "12.876",
+        "Batch_RMSE": "2.465",
+        "Wt_RMSE": "3.6788986189311665",
+        "Speed_MAE": "12.395",
+        "Batch_MAE": "1.514",
+        "Wt_MAE": "3.363918265221017",
+        "MQTT_Publish_Time": "1647890846.6649148"
+      }
+    },
+    {
+      "format": "json",
+      "topic": "edge-to-cloud/lstm_hybrid_learning",
+      "timestamp": 1647890738274,
+      "payload": {
+        "Epoch_Id": "1",
+        "Record_Num": "320",
+        "Speed_Latency": "137.36896324157715",
+        "Batch_Latency": "134.12562227249146",
+        "Wt_Latency": "47.98960995674133",
+        "Speed_RMSE": "23.703",
+        "Batch_RMSE": "1.402",
+        "Wt_RMSE": "7.514513176597004",
+        "Speed_MAE": "23.442",
+        "Batch_MAE": "1.091",
+        "Wt_MAE": "7.294493750000001",
+        "MQTT_Publish_Time": "1647890738.082011"
+      }
+    }
+  ]
+}
