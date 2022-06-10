@@ -1,4 +1,6 @@
 # Hybrid-Streaming-Analytics-on-Edge-Cloud
+With the popularity of Internet of Things (IoT), edge computing and cloud computing, more and more stream analytics applications are being developed including real-time trend prediction and object detection on top of IoT sensing data. One popular type of stream analytics is the recurrent neural network (RNN) deep learning model based time series or sequence data prediction and forecasting. Different from traditional analytics that assumes data to be processed are available ahead of time and will not change, stream analytics deals with data that are being generated continuously and data trend/distribution could change (aka concept drift), which will cause prediction/forecasting accuracy to drop over time. One other challenge is to find the best resource provisioning for stream analytics to achieve good overall latency.
+In this paper, we study how to best leverage edge and cloud resources to achieve better accuracy and latency for RNN-based stream analytics. We propose a novel edge-cloud integrated framework for hybrid stream analytics that support low latency inference on the edge and high capacity training on the cloud. We study the flexible deployment of our hybrid learning framework, namely edge-centric, cloud-centric and edge-cloud integrated. Further, our hybrid learning framework can dynamically combine inference results from an RNN model pre-trained based on historical data and another RNN model re-trained periodically based on the most recent data. Using real-world and simulated stream datasets, our experiments show the proposed edge-cloud deployment is the best among all three deployment types in terms of latency. For accuracy, the experiments show our dynamic learning approach performs the best among all learning approaches for all three concept drift scenarios. 
 
 ## Deploy customized application (Hybrid Analytics) in AWS IoT
 
@@ -74,3 +76,18 @@ You can also see the result print out via [MQTT test client](https://us-west-2.c
 7. Check the results in AWS S3 bucket. The bucket we used includes "edge-to-cloud-hybrid-learning", "edge-to-cloud-metadata" and "edge-to-cloud-streaming-model".
 
 > Note: If you are using different edge like Jetson Nano, you need to change the [recipe.json](./greengrass_packages_publishdata/recipes/recipe.json#L38) file. For  example, change platform[architecture]:"arm" to "aarch64".
+
+### Citation
+If you use this code for your research, please cite our [paper](https://arxiv.org/abs/2205.04622):
+```bash
+@misc{https://doi.org/10.48550/arxiv.2205.04622,
+  doi = {10.48550/ARXIV.2205.04622},
+  url = {https://arxiv.org/abs/2205.04622},
+  author = {Wang, Xin and Khan, Azim and Wang, Jianwu and Gangopadhyay, Aryya and Busart, Carl E. and Freeman, Jade},
+  keywords = {Distributed, Parallel, and Cluster Computing (cs.DC), Machine Learning (cs.LG), Networking and Internet Architecture (cs.NI), FOS: Computer and information sciences, FOS: Computer and information sciences},
+  title = {An Edge-Cloud Integrated Framework for Flexible and Dynamic Stream Analytics},
+  publisher = {arXiv},
+  year = {2022},
+  copyright = {Creative Commons Attribution 4.0 International}
+}
+```
