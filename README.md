@@ -32,18 +32,19 @@ echo "PATH=/home/pi/kafka_2.13-3.1.0/bin:$PATH" >> ~/.profile
 source ~/.profile
 ```
 
+1. For speed layer model training, we need more powerful machine like the EC2 instance. We need to initial a c5.4xlarge EC2 instance in our example. Then copy [install_depandencies.sh](https://github.com/big-data-lab-umbc/Hybrid-Streaming-Analytics-on-Edge-Cloud/blob/main/install_depandencies.sh) and [stream_training.py](https://github.com/big-data-lab-umbc/Hybrid-Streaming-Analytics-on-Edge-Cloud/blob/main/stream_training.py) file to the instance. Next, prepare the EC2 software environment via ``bash install_depandencies.sh``.
+
+2. Create the two Lambda functions via [link](https://us-west-2.console.aws.amazon.com/lambda/home?region=us-west-2#/functions). The function code source is in [folder](https://github.com/big-data-lab-umbc/Hybrid-Streaming-Analytics-on-Edge-Cloud/tree/main/lambda).
 
 ### Steps
 
-1. For speed layer model training, we need more powerful machine like the EC2 instance. We need to initial a c5.4xlarge EC2 instance in our example. Then copy [install_depandencies.sh](https://github.com/big-data-lab-umbc/Hybrid-Streaming-Analytics-on-Edge-Cloud/blob/main/install_depandencies.sh) and [stream_training.py](https://github.com/big-data-lab-umbc/Hybrid-Streaming-Analytics-on-Edge-Cloud/blob/main/stream_training.py) file to the instance. Next, prepare the EC2 software environment via ``bash install_depandencies.sh``.
+1. Set up Greengrass in RPi edges by following Step 1-3 in [link](https://docs.aws.amazon.com/greengrass/v2/developerguide/getting-started.html).
 
-2. Set up Greengrass in RPi edges by following Step 1-3 in [link](https://docs.aws.amazon.com/greengrass/v2/developerguide/getting-started.html).
+2. Now, make sure the Greengrass core devices Status is exact **Healthy**. Then let's continue deploy our customized application. 
 
-3. Now, make sure the Greengrass core devices Status is exact **Healthy**. Then let's continue deploy our customized application. 
+3. Put all greengrass component folders to RPi. For example the [greengrass_packages_edgetocloud_hybridlearning](./greengrass_packages_edgetocloud_hybridlearning). The path I used here is ``/home/pi/Downloads/greengrass_packages_edgetocloud_hybridlearning``.
 
-4. Put all greengrass component folders to RPi. For example the [greengrass_packages_edgetocloud_hybridlearning](./greengrass_packages_edgetocloud_hybridlearning). The path I used here is ``/home/pi/Downloads/greengrass_packages_edgetocloud_hybridlearning``.
-
-5. Deploy all components in AWS IoT:
+4. Deploy all components in AWS IoT:
 
 ```bash
 sudo /greengrass/v2/bin/greengrass-cli deployment create --recipeDir ~/Downloads/greengrass_packages_streamlearning/recipes --artifactDir ~/Downloads/greengrass_packages_streamlearning/artifacts --merge "StreamLearning-Starly=1.0.0"
@@ -53,7 +54,7 @@ sudo /greengrass/v2/bin/greengrass-cli deployment create --recipeDir ~/Downloads
 sudo /greengrass/v2/bin/greengrass-cli deployment create --recipeDir ~/Downloads/greengrass_packages_updatemodel/recipes --artifactDir ~/Downloads/greengrass_packages_updatemodel/artifacts --merge "ModelUpdating-Starly=1.0.0"
 ```
 
-6. Create a topic_list.txt file and put all kafka topics we used in the file. The kafka topics we used includes "batch_input_topic", "batch_topic" and "speed_topic". Then run Kafka Pub/Sub service and publish the metadata:
+5. Create a topic_list.txt file and put all kafka topics we used in the file. The kafka topics we used includes "batch_input_topic", "batch_topic" and "speed_topic". Then run Kafka Pub/Sub service and publish the metadata:
 ```bash
 cd /home/pi/Downloads/kafka_2.13-3.1.0
 bin/zookeeper-server-start.sh config/zookeeper.properties
@@ -63,13 +64,13 @@ awk -F':' '{ system("/home/pi/Downloads/kafka_2.13-3.1.0/bin/kafka-topics.sh --c
 python3 /home/pi/Downloads/greengrass_packages_publishdata/artifacts/MetadataPublishing-Starly/1.0.0/metadata_publishing/kafkapublish.py localhost:9092 batch_input_topic /home/pi/Downloads/greengrass_packages_publishdata/artifacts/MetadataPublishing-Starly/1.0.0/metadata_publishing/sample_data/test.csv 29999
 ```
 
-7. Run the following command to verify that application component runs and prints the result.
+6. Run the following command to verify that application component runs and prints the result.
 ```bash
 sudo tail -f /greengrass/v2/logs/EdgeToCloud-HybirdLearning-Starly.log
 ```
 
 You can also see the result print out via [MQTT test client](https://us-west-2.console.aws.amazon.com/iot/home?region=us-west-2#/test) in AWS IoT console.
 
-8. Check the results in AWS S3 bucket. The bucket we used includes "edge-to-cloud-hybrid-learning", "edge-to-cloud-metadata" and "edge-to-cloud-streaming-model".
+7. Check the results in AWS S3 bucket. The bucket we used includes "edge-to-cloud-hybrid-learning", "edge-to-cloud-metadata" and "edge-to-cloud-streaming-model".
 
 > Note: If you are using different edge like Jetson Nano, you need to change the [recipe.json](./greengrass_packages_publishdata/recipes/recipe.json#L38) file. For  example, change platform[architecture]:"arm" to "aarch64".
