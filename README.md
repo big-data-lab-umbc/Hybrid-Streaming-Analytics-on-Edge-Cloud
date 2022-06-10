@@ -66,12 +66,12 @@ awk -F':' '{ system("/home/pi/Downloads/kafka_2.13-3.1.0/bin/kafka-topics.sh --c
 python3 /home/pi/Downloads/greengrass_packages_publishdata/artifacts/MetadataPublishing-Starly/1.0.0/metadata_publishing/kafkapublish.py localhost:9092 batch_input_topic /home/pi/Downloads/greengrass_packages_publishdata/artifacts/MetadataPublishing-Starly/1.0.0/metadata_publishing/sample_data/test.csv 29999
 ```
 
-6. Run the following command to verify that application component runs and prints the result.
+6. Run the following command to verify that application component is running and printing the result.
 ```bash
 sudo tail -f /greengrass/v2/logs/EdgeToCloud-HybirdLearning-Starly.log
 ```
 
-You can also see the result print out via [MQTT test client](https://us-west-2.console.aws.amazon.com/iot/home?region=us-west-2#/test) in AWS IoT console.
+Also see the result print out via [MQTT test client](https://us-west-2.console.aws.amazon.com/iot/home?region=us-west-2#/test) in AWS IoT console.
 
 7. Check the results in AWS S3 bucket. The bucket we used includes "edge-to-cloud-hybrid-learning", "edge-to-cloud-metadata" and "edge-to-cloud-streaming-model".
 
@@ -84,7 +84,6 @@ If you use this code for your research, please cite our [paper](https://arxiv.or
   doi = {10.48550/ARXIV.2205.04622},
   url = {https://arxiv.org/abs/2205.04622},
   author = {Wang, Xin and Khan, Azim and Wang, Jianwu and Gangopadhyay, Aryya and Busart, Carl E. and Freeman, Jade},
-  keywords = {Distributed, Parallel, and Cluster Computing (cs.DC), Machine Learning (cs.LG), Networking and Internet Architecture (cs.NI), FOS: Computer and information sciences, FOS: Computer and information sciences},
   title = {An Edge-Cloud Integrated Framework for Flexible and Dynamic Stream Analytics},
   publisher = {arXiv},
   year = {2022},
